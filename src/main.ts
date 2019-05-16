@@ -12,6 +12,8 @@ import { IniciaConexaoRedis } from './services/redis/iniciaConexao.service';
 import { salvaVeiculo } from './services/redis/salvaVeiculo.service';
 import { push } from './services/redis/push.service';
 import { Shape } from './DTOs/shape.dto';
+import { recuperaTrajeto } from './services/redis/recuperaTrajeto.service';
+import { avisaNoTopico } from 'services/rabbitmq/avisaNoTopico.service';
 
 
 
@@ -23,8 +25,7 @@ async function main () {
 
     console.log( `-------------------------------------------------------\n` +
         `[ ${new Date()} ]\n\t| ..... Serviço iniciado ..... |\n` +
-        `-------------------------------------------------------\n\n` )
-
+        `-------------------------------------------------------\n\n` );
     // tarefa 2
     await consumerChannel.consume( rabbitConf.rabbitConsumerQueueName, async ( msg ) => {
 
@@ -52,14 +53,13 @@ async function main () {
                 // se o veiculo está fazendo um itinerario diferente do ultimo registrado.
                 // ou se o veiculo desligou
                 // tarefas 4.1 + 4.2
-                // let shape: Shape = await recuperaTrajeto( veiculo, redis );
+                let shape: Shape = await recuperaTrajeto( veiculo, redis );
+                avisaNoTopico( publishChannel, shape );
 
                 // 4.3
                 await salvaVeiculo( veiculo, redis );
             }
         }
-
-
     } );
 }
 

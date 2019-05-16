@@ -9,11 +9,13 @@ import { Veiculo } from '../../DTOs/veiculo.dto';
 bluebird.promisifyAll( redis.RedisClient.prototype );
 bluebird.promisifyAll( redis.Multi.prototype );
 
-export async function push ( veiculo: Veiculo, redisConnection ) {
+export async function lpop ( veiculo: Veiculo, redisConnection ) {
   try {
-    await redisConnection.rpushAsync( veiculo.ROTULO, JSON.stringify( veiculo.LOCALIZACAO ) );
+    let localizacaoString = await redisConnection.lpopAsync( veiculo.ROTULO );
+    let localizacao = JSON.parse( localizacaoString );
+    return localizacao;
   } catch ( err ) {
-    console.log( `[ push ]: Erro ao adicionar um elemento a uma lista no Redis. ${err.message}` );
+    console.log( `[ lpop ]: Erro ao recuperar um elemento de uma lista no Redis. ${err.message}` );
   }
 }
 

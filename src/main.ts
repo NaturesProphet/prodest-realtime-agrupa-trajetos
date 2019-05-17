@@ -18,7 +18,6 @@ import { avisaNoTopico } from 'services/rabbitmq/avisaNoTopico.service';
 
 
 async function main () {
-
     const redis = IniciaConexaoRedis();
     const consumerChannel: Channel = await getConsumerChannel();
     const publishChannel: Channel = await getPublishChannel();
@@ -41,8 +40,7 @@ async function main () {
         }
         else {
             // se o veiculo ja estava previamente no redis
-
-            if ( itinerario == veiculo.ITINERARIO && !veiculo.IGNICAO ) {
+            if ( itinerario == veiculo.ITINERARIO && veiculo.IGNICAO ) {
                 // se ele ainda está fazendo o mesmo itinerario e está ligado
 
                 await push( veiculo, redis );
@@ -60,6 +58,8 @@ async function main () {
                 await salvaVeiculo( veiculo, redis );
             }
         }
+
+        consumerChannel.ack( msg );
     } );
 }
 

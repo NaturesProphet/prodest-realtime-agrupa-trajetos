@@ -11,7 +11,7 @@ bluebird.promisifyAll( redis.Multi.prototype );
 
 export async function lpop ( veiculo: Veiculo, redisConnection ) {
   try {
-    let localizacaoString = await redisConnection.lpopAsync( veiculo.ROTULO );
+    let localizacaoString = await redisConnection.lpopAsync( `shapes:${veiculo.ROTULO}` );
     let localizacao = JSON.parse( localizacaoString );
     return localizacao;
   } catch ( err ) {

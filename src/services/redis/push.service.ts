@@ -10,8 +10,9 @@ bluebird.promisifyAll( redis.RedisClient.prototype );
 bluebird.promisifyAll( redis.Multi.prototype );
 
 export async function push ( veiculo: Veiculo, redisConnection ) {
+  console.log( `PUSHANDO O ROTULO ${veiculo.ROTULO}` )
   try {
-    await redisConnection.rpushAsync( veiculo.ROTULO, JSON.stringify( veiculo.LOCALIZACAO ) );
+    await redisConnection.rpushAsync( `shapes:${veiculo.ROTULO}`, JSON.stringify( veiculo.LOCALIZACAO ) );
   } catch ( err ) {
     console.log( `[ push ]: Erro ao adicionar um elemento a uma lista no Redis. ${err.message}` );
   }

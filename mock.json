@@ -1,0 +1,11 @@
+{
+  "ROTULO": "carro123",
+  "ITINERARIO": "509_V",
+  "IGNICAO": true,
+  "LOCALIZACAO": {
+    "LONGITUDE": -40.0,
+    "LATITUDE": -20.0,
+    "HORARIO": 123456789,
+    "VELOCIDADE": 45.5
+  }
+}

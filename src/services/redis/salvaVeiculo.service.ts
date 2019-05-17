@@ -11,11 +11,11 @@ bluebird.promisifyAll( redis.Multi.prototype );
 
 export async function salvaVeiculo ( veiculo: Veiculo, redisConnection ) {
   try {
-    if ( veiculo.ROTULO != undefined ) {
+    if ( veiculo.ROTULO != undefined && veiculo.ITINERARIO != undefined ) {
       await redisConnection.setAsync( `carro:${veiculo.ROTULO}`, veiculo.ITINERARIO );
     }
     else {
-      console.log( `Rotulo invalido: ${JSON.stringify( veiculo )}` );
+      console.log( `[ salvaVeiculo ]: dados invalidos: ${JSON.stringify( veiculo )}` );
     }
 
   } catch ( err ) {

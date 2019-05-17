@@ -1,6 +1,6 @@
 {
   "name": "realtime-agrupa-trajetos",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "isola pedaços de trajetos a cada desligamento ou mudança de itinerario",
   "main": "src/main.ts",
   "scripts": {

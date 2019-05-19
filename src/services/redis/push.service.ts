@@ -1,7 +1,6 @@
-import * as dotenv from 'dotenv';
-if ( process.env.NODE_ENV != 'production' ) {
-  dotenv.config();
-}
+import { setEnvironment } from '../../services/env.service';
+setEnvironment();
+
 import * as bluebird from 'bluebird';
 import * as redis from 'redis';
 import { Veiculo } from '../../DTOs/veiculo.dto';

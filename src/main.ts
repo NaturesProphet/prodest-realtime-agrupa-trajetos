@@ -1,7 +1,6 @@
-import * as dotenv from 'dotenv';
-if ( process.env.NODE_ENV != 'production' ) {
-    dotenv.config();
-}
+import { setEnvironment } from './services/env.service';
+setEnvironment();
+
 import { Channel } from 'amqplib';
 import { getConsumerChannel } from './services/rabbitmq/getConsumerChannel.service';
 import { getPublishChannel } from './services/rabbitmq/getPublishChannel.service';
@@ -13,7 +12,7 @@ import { salvaVeiculo } from './services/redis/salvaVeiculo.service';
 import { push } from './services/redis/push.service';
 import { Shape } from './DTOs/shape.dto';
 import { recuperaTrajeto } from './services/redis/recuperaTrajeto.service';
-import { avisaNoTopico } from 'services/rabbitmq/avisaNoTopico.service';
+import { avisaNoTopico } from './services/rabbitmq/avisaNoTopico.service';
 
 
 

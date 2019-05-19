@@ -12,7 +12,7 @@ export async function createChannel () {
     conn = await connect( conf.amqpOptions );
 
     try {
-      let channel = await conn.createChannel();
+      channel = await conn.createChannel();
 
       try {
         await channel.assertExchange( conf.rabbitTopicName, 'topic', { durable: false } );
